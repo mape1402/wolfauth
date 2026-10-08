@@ -2,7 +2,7 @@
 
 Date: 2026-10-07
 
-These scenarios define the first unit test matrix for the Core Authorization MVP. Iteration 0 provides the contracts and expected behavior; Iteration 1 should turn these scenarios into executable tests against the first evaluator implementation.
+These scenarios define the first unit test matrix for the Core Authorization MVP. Iteration 0 provides the contracts and expected behavior; Iteration 2 should turn these scenarios into executable tests against the first evaluator implementation.
 
 ## Test Matrix
 

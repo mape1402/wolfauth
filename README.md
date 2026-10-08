@@ -570,7 +570,7 @@ This proves the heart of WolfAuth without pulling in EF Core, admin UI, Entra ID
 
 See the detailed [Iteration 0 plan](docs/iteration-0-product-contract-spike.md).
 The compiled contract notes are in [Iteration 0 contracts](docs/iteration-0-contracts.md), and the first evaluator test matrix is in [Iteration 0 acceptance scenarios](docs/iteration-0-acceptance-scenarios.md).
-The next implementation plan is [Iteration 1: Core Authorization MVP](docs/iteration-1-core-authorization-mvp.md).
+The next implementation plans are [Iteration 1: Authentication Binding MVP](docs/iteration-1-authentication-binding-mvp.md) and [Iteration 2: Core Authorization MVP](docs/iteration-2-core-authorization-mvp.md).
 
 ## Roadmap
 
@@ -596,15 +596,30 @@ Acceptance criteria:
 - The evaluator can answer simple and scoped `Can` checks.
 - The model is independent from ASP.NET Core and EF Core.
 
-### Iteration 1: Core Authorization MVP
+### Iteration 1: Authentication Binding MVP
 
-Implement the core in memory with strong unit tests.
+Map already-authenticated .NET identities into normalized WolfAuth subjects.
 
-See the detailed [Iteration 1 plan](docs/iteration-1-core-authorization-mvp.md).
+See the detailed [Iteration 1 plan](docs/iteration-1-authentication-binding-mvp.md).
 
 Focus areas:
 
-- `WolfAuth.Abstractions`.
+- `ClaimsPrincipal` to `WolfAuthSubject` mapping.
+- Claim mapping options.
+- Provider and external user id resolution.
+- Email, display name, and UPN resolution.
+- External group extraction from claims.
+- Local/development subject helper.
+- Subject resolution tests.
+
+### Iteration 2: Core Authorization MVP
+
+Implement the core in memory with strong unit tests.
+
+See the detailed [Iteration 2 plan](docs/iteration-2-core-authorization-mvp.md).
+
+Focus areas:
+
 - `WolfAuth`.
 - Permission keys.
 - Role and assignment composition.
@@ -612,7 +627,7 @@ Focus areas:
 - Known subject enforcement.
 - Effective permission calculation.
 
-### Iteration 2: ASP.NET Core Integration
+### Iteration 3: ASP.NET Core Integration
 
 Make the core enforceable in web hosts.
 
@@ -626,7 +641,7 @@ Focus areas:
 - Explicit `RequireAsync` service calls.
 - Minimal API integration.
 
-### Iteration 3: Persistence
+### Iteration 4: Persistence
 
 Add durable storage.
 
@@ -641,7 +656,7 @@ Focus areas:
 - Audit log.
 - Bootstrap admin seeding.
 
-### Iteration 4: Admin UI
+### Iteration 5: Admin UI
 
 Provide a reusable management surface.
 
@@ -655,7 +670,7 @@ Focus areas:
 - Audit log.
 - Host branding and theming hooks.
 
-### Iteration 5: Entra ID Adapter
+### Iteration 6: Entra ID Adapter
 
 Add a first provider-specific adapter.
 
@@ -668,7 +683,7 @@ Focus areas:
 - Group-to-role mapping.
 - Group overage resolution.
 
-### Iteration 6: Invitations
+### Iteration 7: Invitations
 
 Support provisioning without directory search.
 
@@ -681,7 +696,7 @@ Focus areas:
 - Email sender abstraction.
 - Copy-link flow.
 
-### Iteration 7: SPA/API Contract
+### Iteration 8: SPA/API Contract
 
 Expose reusable API endpoints for SPAs and external clients.
 
@@ -692,7 +707,7 @@ Focus areas:
 - `/api/security/permissions`.
 - Administrative endpoints.
 
-### Iteration 8: Host Integrations
+### Iteration 9: Host Integrations
 
 Integrate WolfAuth into Elysium products.
 
@@ -716,7 +731,7 @@ src/
     WolfAuth.csproj
 ```
 
-The current code defines provider-agnostic contracts, registry surfaces, evaluator interfaces, options, and documented acceptance scenarios. The next implementation step should be the Core Authorization MVP.
+The current code defines provider-agnostic contracts, registry surfaces, evaluator interfaces, options, and documented acceptance scenarios. The next implementation step should be the Authentication Binding MVP.
 
 ## Build
 

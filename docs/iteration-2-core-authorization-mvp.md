@@ -1,4 +1,4 @@
-# Iteration 1: Core Authorization MVP
+# Iteration 2: Core Authorization MVP
 
 Date: 2026-10-07
 
@@ -6,13 +6,14 @@ Date: 2026-10-07
 
 Implement the first functional WolfAuth authorization core in memory.
 
-Iteration 0 defined provider-agnostic contracts and acceptance scenarios. Iteration 1 should make those contracts executable with a deterministic in-memory evaluator, focused unit tests, XML documentation on all public code, and no dependency on ASP.NET Core, EF Core, Entra ID, Graph, invitations, or admin UI.
+Iteration 0 defined provider-agnostic authorization contracts. Iteration 1 should make authenticated .NET identities resolvable into `WolfAuthSubject`. Iteration 2 should make those subjects enforceable with a deterministic in-memory evaluator, focused unit tests, XML documentation on all public code, and no dependency on ASP.NET Core, EF Core, Entra ID, Graph, invitations, or admin UI.
 
 ## Outcome
 
 At the end of this iteration, a host should be able to:
 
 - Register permissions, roles, and policies.
+- Resolve or provide a `WolfAuthSubject`.
 - Configure `RequireKnownSubject`.
 - Provide known subjects and assignments through an in-memory store.
 - Expand effective access for a subject.
@@ -23,6 +24,7 @@ At the end of this iteration, a host should be able to:
 ## Guiding Principles
 
 - Keep the core deterministic, small, and storage-agnostic.
+- Consume `WolfAuthSubject`; do not perform authentication inside the authorization evaluator.
 - Preserve the existing public contract style and XML documentation standard.
 - Make behavior observable through stable `WolfAuthEvaluationReason` values.
 - Prefer explicit store/evaluator boundaries over hidden global state.
@@ -32,7 +34,7 @@ At the end of this iteration, a host should be able to:
 ## In Scope
 
 - In-memory authorization data store.
-- Known subject resolution.
+- Known subject resolution against the authorization store.
 - Subject assignments.
 - Default authenticated role assignments.
 - Bootstrap administrator matching.
@@ -40,12 +42,13 @@ At the end of this iteration, a host should be able to:
 - Effective access expansion.
 - Permission evaluation.
 - Policy evaluation dispatch through `IWolfAuthPolicyEvaluator`.
-- Test project and unit tests for the Iteration 0 acceptance matrix.
+- Unit tests for the Iteration 0 authorization acceptance matrix.
 - XML documentation summaries for all new public APIs.
 - README, changelog, and docs updates.
 
 ## Out Of Scope
 
+- Authentication binding, except consuming `WolfAuthSubject` from Iteration 1.
 - EF Core persistence.
 - ASP.NET Core dependency injection package.
 - ASP.NET Core attributes, filters, middleware, endpoint metadata, or Razor helpers.
@@ -202,21 +205,24 @@ Requirements:
 - return `DeniedScopeMismatch` when a grant exists for a different scope
 - return allowed reasons based on grant source
 
-### 4. Test Project
-
-Add a test project under:
-
-```text
-tests/
-  WolfAuth.Tests/
-```
-
-Preferred stack:
-
-- xUnit
-- FluentAssertions if already acceptable, otherwise plain xUnit assertions
+### 4. Test Coverage
 
 Required tests should cover the matrix from `docs/iteration-0-acceptance-scenarios.md`.
+
+Required areas:
+
+- known subject enforcement
+- default authenticated access
+- direct permissions
+- role permissions
+- missing permissions
+- scope mismatch
+- external group mapping
+- bootstrap administrators
+- unknown permissions
+- unregistered policies
+- failed policies
+- effective access expansion
 
 ### 5. Documentation Updates
 
@@ -224,22 +230,13 @@ Update:
 
 - `README.md`
 - `CHANGELOG.md`
-- Iteration 1 plan status
+- Iteration 2 plan status
 
 All new public code must include XML documentation summaries, and the package must continue to include XML docs.
 
 ## Implementation Steps
 
-### Step 1: Test Project Skeleton
-
-Create the test project and add it to the solution.
-
-Acceptance:
-
-- `dotnet test WolfAuth.sln --configuration Release` runs.
-- Empty or placeholder tests are avoided; the first useful evaluator tests are added immediately.
-
-### Step 2: Store Contract And In-Memory Store
+### Step 1: Authorization Store Contract And In-Memory Store
 
 Implement store contracts and in-memory data setup helpers.
 
@@ -247,7 +244,7 @@ Acceptance:
 
 - Tests can seed known subjects and assignments without framework dependencies.
 
-### Step 3: Effective Access Expansion
+### Step 2: Effective Access Expansion
 
 Implement effective access calculation.
 
@@ -259,7 +256,7 @@ Acceptance:
 - Default authenticated grants appear only when configured.
 - Bootstrap admin grants appear when a subject matches.
 
-### Step 4: Permission Evaluation
+### Step 3: Permission Evaluation
 
 Implement `CanAsync` for permission checks.
 
@@ -268,7 +265,7 @@ Acceptance:
 - Required permission scenarios pass.
 - Unknown permission and scope mismatch scenarios return stable reasons.
 
-### Step 5: Policy Evaluation
+### Step 4: Policy Evaluation
 
 Implement policy registration and evaluator dispatch.
 
@@ -278,9 +275,9 @@ Acceptance:
 - failed policies return `DeniedPolicyFailed`
 - passing policies can return allowed results
 
-### Step 6: Hardening Pass
+### Step 5: Hardening Pass
 
-Review public API shape, XML summaries, nullability, and package output.
+Review public API shape, XML summaries, nullability, package output, and docs.
 
 Acceptance:
 
@@ -291,13 +288,13 @@ Acceptance:
 
 ## Acceptance Criteria
 
-Iteration 1 is complete when:
+Iteration 2 is complete when:
 
 - The in-memory authorization core compiles across `net8.0`, `net9.0`, and `net10.0`.
-- The test suite covers all required Iteration 0 acceptance scenarios.
+- The test suite covers all required Iteration 0 authorization acceptance scenarios.
 - `dotnet test WolfAuth.sln --configuration Release` passes.
 - `dotnet pack WolfAuth.sln --configuration Release --no-build` includes XML docs.
-- All public APIs introduced in Iteration 1 have XML summaries.
+- All public APIs introduced in Iteration 2 have XML summaries.
 - No ASP.NET Core, EF Core, provider-specific, invitation, or admin UI dependency is introduced.
 
 ## Required Test Names
