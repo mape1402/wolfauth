@@ -8,6 +8,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'samples/**'
       - 'docs/**'
       - '.github/workflows/**'
       - '.release'
@@ -21,6 +22,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'samples/**'
       - 'docs/**'
       - '.github/workflows/**'
       - '.release'
@@ -79,7 +81,16 @@ jobs:
             exit 0
           fi
 
-          dotnet test "$DOTNET_TARGET" --no-build --configuration "$CONFIGURATION" --verbosity normal
+          dotnet test tests/WolfAuth.Tests/WolfAuth.Tests.csproj \
+            --no-build \
+            --configuration "$CONFIGURATION" \
+            --verbosity normal \
+            /p:CollectCoverage=true \
+            /p:CoverletOutput=../../artifacts/coverage/ci/ \
+            /p:CoverletOutputFormat=cobertura \
+            /p:Threshold=99 \
+            /p:ThresholdType=line%2cbranch \
+            /p:ThresholdStat=total
 
       - name: Resolve release marker
         id: release

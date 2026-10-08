@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -29,6 +30,10 @@ public static class WolfAuthServiceCollectionExtensions
         services.AddLogging();
         services.AddAuthorization();
         services.AddHttpContextAccessor();
+        services.ConfigureHttpJsonOptions(options =>
+        {
+            options.SerializerOptions.Converters.Add(new WolfAuthJsonStringKeyConverterFactory());
+        });
         services.TryAddSingleton(builder.Options);
         services.TryAddSingleton(builder.ClaimsMapping);
         services.TryAddSingleton<IWolfAuthPermissionRegistry>(registry);
@@ -51,6 +56,7 @@ public static class WolfAuthServiceCollectionExtensions
         services.TryAddScoped<IWolfAuthCurrentSubjectAccessor, WolfAuthCurrentSubjectAccessor>();
         services.TryAddScoped<IWolfAuthProvisioningService, WolfAuthProvisioningService>();
         services.TryAddScoped<IWolfAuthAdministrationService, WolfAuthAdministrationService>();
+        services.TryAddScoped<IWolfAuthAdminEndpointHandler, WolfAuthAdminEndpointHandler>();
 
         if (builder.EnableEffectiveAccessCache)
         {

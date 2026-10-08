@@ -191,13 +191,15 @@ public sealed class WolfAuthClaimsPrincipalSubjectResolverTests
         var resolver = new WolfAuthClaimsPrincipalSubjectResolver(options);
         var principal = AuthenticatedPrincipal(
             new Claim("sub", "user-123"),
-            new Claim("custom", "value"));
+            new Claim("custom", "value"),
+            new Claim("blank-issuer", "value", ClaimValueTypes.String, " "));
 
         var result = await resolver.ResolveAsync(principal);
 
         Assert.True(result.Succeeded);
         Assert.NotNull(result.Subject);
         Assert.Contains(result.Subject.Claims, claim => claim.Type == "custom" && claim.Value == "value");
+        Assert.Contains(result.Subject.Claims, claim => claim.Type == "blank-issuer" && claim.Issuer is null);
     }
 
     /// <summary>

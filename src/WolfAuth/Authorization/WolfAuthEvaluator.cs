@@ -111,9 +111,7 @@ public sealed class WolfAuthEvaluator : IWolfAuthEvaluator
         }
 
         var hasSamePermissionElsewhere = effectiveAccess.Permissions.Any(grant =>
-            grant.PermissionKey == permissionKey &&
-            grant.ScopeKey != WolfAuthScopeKey.Global &&
-            grant.ScopeKey != context.ScopeKey);
+            grant.PermissionKey == permissionKey);
 
         return WolfAuthEvaluationResult.Deny(
             hasSamePermissionElsewhere

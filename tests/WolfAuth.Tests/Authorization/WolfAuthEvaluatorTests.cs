@@ -266,6 +266,207 @@ public sealed class WolfAuthEvaluatorTests
     }
 
     /// <summary>
+    /// Verifies that policies with satisfied required permissions can allow access.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_AllowsPolicy_WhenRequiredPermissionAndEvaluatorAllow()
+    {
+        var subject = TestSubject("subject-1");
+        var registry = CreateRegistryBuilder()
+            .AddPolicy("events.promote", requiredPermissions: ["contracts.events.view"])
+            .Build();
+        var store = StoreFor(subject)
+            .AddAssignment(SubjectPermission("a1", subject, "contracts.events.view"))
+            .Build();
+        var evaluator = CreateEvaluator(
+            store,
+            registry: registry,
+            policyEvaluators:
+            [
+                new TestPolicyEvaluator(
+                    "events.promote",
+                    WolfAuthEvaluationResult.Allow(WolfAuthEvaluationReason.Allowed))
+            ]);
+
+        var result = await evaluator.CanAsync(WolfAuthEvaluationContext.ForPolicy(
+            subject,
+            "events.promote"));
+
+        Assert.True(result.IsAllowed);
+    }
+
+    /// <summary>
+    /// Verifies that missing required policy permissions fail with diagnostics.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_DeniesPolicy_WhenRequiredPermissionFails()
+    {
+        var subject = TestSubject("subject-1");
+        var registry = CreateRegistryBuilder()
+            .AddPolicy("events.promote", requiredPermissions: ["contracts.events.view"])
+            .Build();
+        var evaluator = CreateEvaluator(
+            StoreFor(subject).Build(),
+            registry: registry,
+            policyEvaluators:
+            [
+                new TestPolicyEvaluator(
+                    "events.promote",
+                    WolfAuthEvaluationResult.Allow(WolfAuthEvaluationReason.Allowed))
+            ]);
+
+        var result = await evaluator.CanAsync(WolfAuthEvaluationContext.ForPolicy(
+            subject,
+            "events.promote"));
+
+        Assert.False(result.IsAllowed);
+        Assert.Equal(WolfAuthEvaluationReason.DeniedPolicyFailed, result.Reason);
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Contains("contracts.events.view", StringComparison.Ordinal));
+    }
+
+    /// <summary>
+    /// Verifies that registered policies without evaluators are denied.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_DeniesPolicy_WhenEvaluatorIsMissing()
+    {
+        var subject = TestSubject("subject-1");
+        var registry = CreateRegistryBuilder()
+            .AddPolicy("events.promote")
+            .Build();
+        var evaluator = CreateEvaluator(StoreFor(subject).Build(), registry: registry);
+
+        var result = await evaluator.CanAsync(WolfAuthEvaluationContext.ForPolicy(
+            subject,
+            "events.promote"));
+
+        Assert.False(result.IsAllowed);
+        Assert.Equal(WolfAuthEvaluationReason.DeniedPolicyNotRegistered, result.Reason);
+    }
+
+    /// <summary>
+    /// Verifies that policy evaluator failures keep existing policy failure reasons.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_PreservesPolicyFailureReason_WhenEvaluatorReturnsPolicyFailure()
+    {
+        var subject = TestSubject("subject-1");
+        var registry = CreateRegistryBuilder()
+            .AddPolicy("events.promote")
+            .Build();
+        var evaluator = CreateEvaluator(
+            StoreFor(subject).Build(),
+            registry: registry,
+            policyEvaluators:
+            [
+                new TestPolicyEvaluator(
+                    "events.promote",
+                    WolfAuthEvaluationResult.Deny(WolfAuthEvaluationReason.DeniedPolicyFailed))
+            ]);
+
+        var result = await evaluator.CanAsync(WolfAuthEvaluationContext.ForPolicy(
+            subject,
+            "events.promote"));
+
+        Assert.False(result.IsAllowed);
+        Assert.Equal(WolfAuthEvaluationReason.DeniedPolicyFailed, result.Reason);
+    }
+
+    /// <summary>
+    /// Verifies invalid evaluation contexts return invalid request results.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_DeniesInvalidEvaluationContexts()
+    {
+        var subject = TestSubject("subject-1");
+        var evaluator = CreateEvaluator(StoreFor(subject).Build());
+
+        var invalidKind = await evaluator.CanAsync(new WolfAuthEvaluationContext
+        {
+            Subject = subject,
+            Kind = (WolfAuthEvaluationKind)999
+        });
+        var missingPermission = await evaluator.CanAsync(new WolfAuthEvaluationContext
+        {
+            Subject = subject,
+            Kind = WolfAuthEvaluationKind.Permission
+        });
+        var missingPolicy = await evaluator.CanAsync(new WolfAuthEvaluationContext
+        {
+            Subject = subject,
+            Kind = WolfAuthEvaluationKind.Policy
+        });
+
+        Assert.Equal(WolfAuthEvaluationReason.DeniedInvalidRequest, invalidKind.Reason);
+        Assert.Equal(WolfAuthEvaluationReason.DeniedInvalidRequest, missingPermission.Reason);
+        Assert.Equal(WolfAuthEvaluationReason.DeniedInvalidRequest, missingPolicy.Reason);
+        await Assert.ThrowsAsync<ArgumentNullException>(async () => await evaluator.CanAsync(null!));
+    }
+
+    /// <summary>
+    /// Verifies that duplicate policy evaluators use the first evaluator.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_UsesFirstPolicyEvaluator_WhenDuplicatesExist()
+    {
+        var subject = TestSubject("subject-1");
+        var registry = CreateRegistryBuilder()
+            .AddPolicy("events.promote")
+            .Build();
+        var evaluator = CreateEvaluator(
+            StoreFor(subject).Build(),
+            registry: registry,
+            policyEvaluators:
+            [
+                new TestPolicyEvaluator(
+                    "events.promote",
+                    WolfAuthEvaluationResult.Allow(WolfAuthEvaluationReason.Allowed)),
+                new TestPolicyEvaluator(
+                    "events.promote",
+                    WolfAuthEvaluationResult.Deny(WolfAuthEvaluationReason.DeniedPolicyFailed))
+            ]);
+
+        var result = await evaluator.CanAsync(WolfAuthEvaluationContext.ForPolicy(
+            subject,
+            "events.promote"));
+
+        Assert.True(result.IsAllowed);
+    }
+
+    /// <summary>
+    /// Verifies unknown grant sources still produce an allow result.
+    /// </summary>
+    [Fact]
+    public async Task CanAsync_AllowsPermission_WhenGrantSourceIsUnknown()
+    {
+        var subject = TestSubject("subject-1");
+        var access = new WolfAuthEffectiveAccess
+        {
+            Subject = subject,
+            IsKnownSubject = true,
+            Permissions =
+            [
+                new WolfAuthPermissionGrant
+                {
+                    PermissionKey = "contracts.events.view",
+                    ScopeKey = WolfAuthScopeKey.Global,
+                    Source = (WolfAuthGrantSource)999
+                }
+            ]
+        };
+        var evaluator = new WolfAuthEvaluator(
+            CreateRegistryBuilder().Build(),
+            new StaticEffectiveAccessResolver(access));
+
+        var result = await evaluator.CanAsync(WolfAuthEvaluationContext.ForPermission(
+            subject,
+            "contracts.events.view"));
+
+        Assert.True(result.IsAllowed);
+        Assert.Equal(WolfAuthEvaluationReason.Allowed, result.Reason);
+    }
+
+    /// <summary>
     /// Verifies that effective access expands direct, role, group, default, and bootstrap access.
     /// </summary>
     [Fact]
@@ -489,6 +690,31 @@ public sealed class WolfAuthEvaluatorTests
             CancellationToken cancellationToken = default)
         {
             return ValueTask.FromResult(_result);
+        }
+    }
+
+    /// <summary>
+    /// Provides a fixed effective access snapshot for evaluator tests.
+    /// </summary>
+    private sealed class StaticEffectiveAccessResolver : IWolfAuthEffectiveAccessResolver
+    {
+        private readonly WolfAuthEffectiveAccess _effectiveAccess;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StaticEffectiveAccessResolver"/> class.
+        /// </summary>
+        /// <param name="effectiveAccess">The effective access returned by the resolver.</param>
+        public StaticEffectiveAccessResolver(WolfAuthEffectiveAccess effectiveAccess)
+        {
+            _effectiveAccess = effectiveAccess;
+        }
+
+        /// <inheritdoc />
+        public ValueTask<WolfAuthEffectiveAccess> ResolveAsync(
+            WolfAuthSubject subject,
+            CancellationToken cancellationToken = default)
+        {
+            return ValueTask.FromResult(_effectiveAccess);
         }
     }
 }
