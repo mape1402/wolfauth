@@ -569,6 +569,7 @@ Build the smallest useful authorization core before adapter or UI work:
 This proves the heart of WolfAuth without pulling in EF Core, admin UI, Entra ID, Graph, or invitations too early.
 
 See the detailed [Iteration 0 plan](docs/iteration-0-product-contract-spike.md).
+The compiled contract notes are in [Iteration 0 contracts](docs/iteration-0-contracts.md), and the first evaluator test matrix is in [Iteration 0 acceptance scenarios](docs/iteration-0-acceptance-scenarios.md).
 
 ## Roadmap
 
@@ -700,15 +701,19 @@ Targets:
 
 ## Current Repository State
 
-This repository currently contains the initial WolfAuth library scaffold only:
+This repository currently contains the initial WolfAuth contract spike:
 
 ```text
 src/
   WolfAuth/
+    Contracts/
+    Evaluation/
+    Options/
+    Registry/
     WolfAuth.csproj
 ```
 
-There is intentionally no implementation code yet. The first implementation step should be the Iteration 0 product and contract spike, followed by the core authorization MVP.
+The current code defines provider-agnostic contracts, registry surfaces, evaluator interfaces, options, and documented acceptance scenarios. The next implementation step should be the Core Authorization MVP.
 
 ## Build
 

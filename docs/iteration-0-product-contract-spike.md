@@ -228,6 +228,15 @@ Iteration 0 is complete when:
 - Acceptance test scenarios are ready for Iteration 1.
 - Open decisions are captured with recommended defaults.
 
+## Implemented Artifacts
+
+- Core contract types under `src/WolfAuth/Contracts`.
+- Evaluator contract types under `src/WolfAuth/Evaluation`.
+- Host options under `src/WolfAuth/Options`.
+- Permission registry contracts and builder under `src/WolfAuth/Registry`.
+- Detailed contract notes in `docs/iteration-0-contracts.md`.
+- Acceptance scenario matrix in `docs/iteration-0-acceptance-scenarios.md`.
+
 ## Recommended Defaults
 
 - Keep one package for the spike, then split only when code starts to justify it.
