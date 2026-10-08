@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>WolfAuth</PackageId>
+    <Title>WolfAuth</Title>
+    <PackageType>Dependency</PackageType>
+    <Description>Centralized authentication, authorization, and access provisioning library for Elysium products.</Description>
+  </PropertyGroup>
+
+</Project>
