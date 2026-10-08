@@ -11,6 +11,7 @@ All notable changes to WolfAuth will be documented in this file.
 - Added Iteration 0 contract notes and acceptance scenario matrix.
 - Added XML documentation generation and summaries for the public contract surface.
 - Added complete Iteration 1 Authentication Binding MVP and Iteration 2 Core Authorization MVP implementation plans.
+- Added the Iteration 1 authentication binding implementation with claims principal subject resolution, development subject factory interfaces, and unit tests.
 
 ## [v0.1.0] - 2026-10-07
 

@@ -71,7 +71,18 @@ WolfAuth is designed around clear boundaries:
 
 ## Authentication
 
-WolfAuth should support pluggable identity adapters. The adapter only authenticates and normalizes identity; it does not decide product authorization.
+WolfAuth supports a framework-light authentication binding layer that maps an already-authenticated `ClaimsPrincipal` into a normalized `WolfAuthSubject`. The host still owns the actual authentication scheme; WolfAuth only normalizes the subject that authorization consumes.
+
+The first binding includes:
+
+- `IWolfAuthSubjectResolver`.
+- `WolfAuthClaimsPrincipalSubjectResolver`.
+- `WolfAuthClaimsPrincipalMappingOptions`.
+- `WolfAuthSubjectResolutionResult`.
+- `IWolfAuthDevelopmentSubjectFactory`.
+- `WolfAuthDevelopmentSubjectFactory`.
+
+WolfAuth can later add pluggable identity adapters. The adapter only authenticates and normalizes identity; it does not decide product authorization.
 
 Candidate adapters:
 
@@ -570,7 +581,7 @@ This proves the heart of WolfAuth without pulling in EF Core, admin UI, Entra ID
 
 See the detailed [Iteration 0 plan](docs/iteration-0-product-contract-spike.md).
 The compiled contract notes are in [Iteration 0 contracts](docs/iteration-0-contracts.md), and the first evaluator test matrix is in [Iteration 0 acceptance scenarios](docs/iteration-0-acceptance-scenarios.md).
-The next implementation plans are [Iteration 1: Authentication Binding MVP](docs/iteration-1-authentication-binding-mvp.md) and [Iteration 2: Core Authorization MVP](docs/iteration-2-core-authorization-mvp.md).
+The authentication binding implementation is tracked in [Iteration 1: Authentication Binding MVP](docs/iteration-1-authentication-binding-mvp.md), and the next implementation plan is [Iteration 2: Core Authorization MVP](docs/iteration-2-core-authorization-mvp.md).
 
 ## Roadmap
 
@@ -724,20 +735,25 @@ This repository currently contains the initial WolfAuth contract spike:
 ```text
 src/
   WolfAuth/
+    Authentication/
     Contracts/
+    Development/
     Evaluation/
     Options/
     Registry/
     WolfAuth.csproj
+tests/
+  WolfAuth.Tests/
 ```
 
-The current code defines provider-agnostic contracts, registry surfaces, evaluator interfaces, options, and documented acceptance scenarios. The next implementation step should be the Authentication Binding MVP.
+The current code defines provider-agnostic contracts, claims principal subject resolution, development subject factories, registry surfaces, evaluator interfaces, options, and documented acceptance scenarios. The next implementation step should be the Core Authorization MVP.
 
 ## Build
 
 ```bash
 dotnet restore WolfAuth.sln
 dotnet build WolfAuth.sln --configuration Release
+dotnet test WolfAuth.sln --configuration Release
 ```
 
 ## Release

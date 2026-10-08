@@ -159,17 +159,19 @@ Rules:
 
 ### Local Development Factory
 
-Add a small helper for tests and demos.
+Add a small factory for tests and demos. This follows the WolfAuth convention of interface plus implementation instead of static helper classes.
 
 Conceptual shape:
 
 ```csharp
-public static class WolfAuthDevelopmentSubjects
+public interface IWolfAuthDevelopmentSubjectFactory
 {
-    public static WolfAuthSubject Create(
-        string externalUserId,
-        string? email = null,
-        string? displayName = null);
+    WolfAuthSubject Create(WolfAuthDevelopmentSubjectRequest request);
+}
+
+public sealed class WolfAuthDevelopmentSubjectFactory : IWolfAuthDevelopmentSubjectFactory
+{
+    public WolfAuthSubject Create(WolfAuthDevelopmentSubjectRequest request);
 }
 ```
 
@@ -312,13 +314,22 @@ Iteration 1 is complete when:
 - `dotnet pack WolfAuth.sln --configuration Release --no-build` includes XML docs.
 - no ASP.NET Core, provider-specific, persistence, invitation, UI, or authorization evaluator dependency is introduced.
 
+## Implemented Artifacts
+
+- Subject resolver contract under `src/WolfAuth/Authentication/IWolfAuthSubjectResolver.cs`.
+- Subject resolution result and stable failure reasons under `src/WolfAuth/Authentication/WolfAuthSubjectResolutionResult.cs`.
+- Claims principal mapping options under `src/WolfAuth/Authentication/WolfAuthClaimsPrincipalMappingOptions.cs`.
+- Claims principal resolver under `src/WolfAuth/Authentication/WolfAuthClaimsPrincipalSubjectResolver.cs`.
+- Development subject factory interface and implementation under `src/WolfAuth/Development`.
+- Authentication binding tests under `tests/WolfAuth.Tests`.
+
 ## Open Decisions Before Implementation
 
 - Whether `SubjectId` should default to the external user id when no dedicated subject id claim exists.
 - Whether `roles` should ever be treated as groups by default.
 - Whether provider values should be normalized to lowercase.
 - Whether missing email should be allowed.
-- Whether the dev subject helper should live under a `Development` namespace.
+- Whether the dev subject factory should live under a `Development` namespace.
 
 ## Recommended Defaults
 
@@ -326,4 +337,4 @@ Iteration 1 is complete when:
 - Do not treat `roles` as groups by default; let hosts opt in.
 - Preserve provider values exactly except trimming whitespace.
 - Allow missing email; require only provider, external user id, and subject id.
-- Keep the dev helper in the main namespace for early ergonomics, with clear XML documentation.
+- Keep the dev factory in the main namespace for early ergonomics, with clear XML documentation.

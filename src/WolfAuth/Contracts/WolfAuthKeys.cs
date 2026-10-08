@@ -1,28 +1,6 @@
 namespace WolfAuth;
 
 /// <summary>
-/// Provides shared validation for WolfAuth typed key values.
-/// </summary>
-internal static class WolfAuthKey
-{
-    /// <summary>
-    /// Returns a trimmed key value or throws when the key is empty.
-    /// </summary>
-    /// <param name="value">The raw key value.</param>
-    /// <param name="parameterName">The parameter name used in validation errors.</param>
-    /// <returns>The trimmed key value.</returns>
-    public static string Require(string value, string parameterName)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
-        }
-
-        return value.Trim();
-    }
-}
-
-/// <summary>
 /// Identifies a subject inside the host product authorization model.
 /// </summary>
 public readonly record struct WolfAuthSubjectId
@@ -31,7 +9,7 @@ public readonly record struct WolfAuthSubjectId
     /// Creates a subject identifier.
     /// </summary>
     /// <param name="value">The subject identifier value.</param>
-    public WolfAuthSubjectId(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthSubjectId(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the subject identifier value.
@@ -49,6 +27,16 @@ public readonly record struct WolfAuthSubjectId
     /// </summary>
     /// <param name="value">The subject identifier value.</param>
     public static implicit operator WolfAuthSubjectId(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -60,7 +48,7 @@ public readonly record struct WolfAuthProviderKey
     /// Creates an identity provider key.
     /// </summary>
     /// <param name="value">The provider key value.</param>
-    public WolfAuthProviderKey(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthProviderKey(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the provider key value.
@@ -78,6 +66,16 @@ public readonly record struct WolfAuthProviderKey
     /// </summary>
     /// <param name="value">The provider key value.</param>
     public static implicit operator WolfAuthProviderKey(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -89,7 +87,7 @@ public readonly record struct WolfAuthExternalUserId
     /// Creates an external user identifier.
     /// </summary>
     /// <param name="value">The external user identifier value.</param>
-    public WolfAuthExternalUserId(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthExternalUserId(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the external user identifier value.
@@ -107,6 +105,16 @@ public readonly record struct WolfAuthExternalUserId
     /// </summary>
     /// <param name="value">The external user identifier value.</param>
     public static implicit operator WolfAuthExternalUserId(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -118,7 +126,7 @@ public readonly record struct WolfAuthExternalGroupKey
     /// Creates an external group key.
     /// </summary>
     /// <param name="value">The external group key value.</param>
-    public WolfAuthExternalGroupKey(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthExternalGroupKey(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the external group key value.
@@ -136,6 +144,16 @@ public readonly record struct WolfAuthExternalGroupKey
     /// </summary>
     /// <param name="value">The external group key value.</param>
     public static implicit operator WolfAuthExternalGroupKey(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -147,7 +165,7 @@ public readonly record struct WolfAuthPermissionKey
     /// Creates a permission key.
     /// </summary>
     /// <param name="value">The permission key value.</param>
-    public WolfAuthPermissionKey(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthPermissionKey(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the permission key value.
@@ -165,6 +183,16 @@ public readonly record struct WolfAuthPermissionKey
     /// </summary>
     /// <param name="value">The permission key value.</param>
     public static implicit operator WolfAuthPermissionKey(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -181,7 +209,7 @@ public readonly record struct WolfAuthRoleKey
     /// Creates a role key.
     /// </summary>
     /// <param name="value">The role key value.</param>
-    public WolfAuthRoleKey(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthRoleKey(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the role key value.
@@ -199,6 +227,16 @@ public readonly record struct WolfAuthRoleKey
     /// </summary>
     /// <param name="value">The role key value.</param>
     public static implicit operator WolfAuthRoleKey(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -215,7 +253,7 @@ public readonly record struct WolfAuthScopeKey
     /// Creates a scope key.
     /// </summary>
     /// <param name="value">The scope key value.</param>
-    public WolfAuthScopeKey(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthScopeKey(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the scope key value.
@@ -233,6 +271,16 @@ public readonly record struct WolfAuthScopeKey
     /// </summary>
     /// <param name="value">The scope key value.</param>
     public static implicit operator WolfAuthScopeKey(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
 
 /// <summary>
@@ -244,7 +292,7 @@ public readonly record struct WolfAuthPolicyKey
     /// Creates a policy key.
     /// </summary>
     /// <param name="value">The policy key value.</param>
-    public WolfAuthPolicyKey(string value) => Value = WolfAuthKey.Require(value, nameof(value));
+    public WolfAuthPolicyKey(string value) => Value = Require(value, nameof(value));
 
     /// <summary>
     /// Gets the policy key value.
@@ -262,4 +310,14 @@ public readonly record struct WolfAuthPolicyKey
     /// </summary>
     /// <param name="value">The policy key value.</param>
     public static implicit operator WolfAuthPolicyKey(string value) => new(value);
+
+    private static string Require(string value, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("WolfAuth keys cannot be empty.", parameterName);
+        }
+
+        return value.Trim();
+    }
 }
