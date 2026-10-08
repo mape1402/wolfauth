@@ -7,7 +7,7 @@ WolfAuth is split into focused packages:
 - `WolfAuth` owns contracts, registry, authentication subject resolution, effective access expansion, evaluation, administration, provisioning, caching, and store interfaces.
 - `WolfAuth.AspNetCore` owns host integration: dependency injection, current-subject access, authorization policy encoding, ASP.NET Core authorization handlers, JSON key serialization, middleware, and administration endpoints.
 - `WolfAuth.EntityFrameworkCore` owns durable persistence for subjects, assignments, and audit records.
-- `WolfAuth.OpenIdConnect` and `WolfAuth.MicrosoftEntraId` own provider-specific provisioning mappers.
+- `WolfAuth.OpenIdConnect` and `WolfAuth.Microsoft.EntraId` own provider-specific provisioning mappers.
 
 The core runtime keeps behavior behind interfaces (`IWolfAuthEvaluator`, `IWolfAuthEffectiveAccessResolver`, `IWolfAuthSubjectResolver`, store contracts, administration/provisioning contracts, and ASP.NET Core endpoint handlers). Static classes are limited to idiomatic ASP.NET Core extension methods.
 

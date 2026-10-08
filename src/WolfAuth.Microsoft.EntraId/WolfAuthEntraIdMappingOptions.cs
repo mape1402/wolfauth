@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace WolfAuth.MicrosoftEntraId;
+namespace WolfAuth.Microsoft.EntraId;
 
 /// <summary>
 /// Configures Microsoft Entra ID claim mapping for WolfAuth provisioning.

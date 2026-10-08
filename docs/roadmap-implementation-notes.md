@@ -12,7 +12,7 @@ Implemented packages:
 - `WolfAuth.AspNetCore`
 - `WolfAuth.EntityFrameworkCore`
 - `WolfAuth.OpenIdConnect`
-- `WolfAuth.MicrosoftEntraId`
+- `WolfAuth.Microsoft.EntraId`
 
 Implemented capabilities:
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <PackageId>WolfAuth.MicrosoftEntraId</PackageId>
+    <PackageId>WolfAuth.Microsoft.EntraId</PackageId>
     <Title>WolfAuth Microsoft Entra ID Adapter</Title>
     <PackageType>Dependency</PackageType>
     <Description>Microsoft Entra ID subject and group adapter package for WolfAuth.</Description>

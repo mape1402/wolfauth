@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace WolfAuth.MicrosoftEntraId;
+namespace WolfAuth.Microsoft.EntraId;
 
 /// <summary>
 /// Maps Microsoft Entra ID principals into WolfAuth provisioning requests.

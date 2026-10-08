@@ -17,11 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfAuth.EntityFrameworkCor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfAuth.OpenIdConnect", "src\WolfAuth.OpenIdConnect\WolfAuth.OpenIdConnect.csproj", "{0911DB8B-296F-4FC6-9C39-C3B54BDF7565}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfAuth.MicrosoftEntraId", "src\WolfAuth.MicrosoftEntraId\WolfAuth.MicrosoftEntraId.csproj", "{6F6A3E71-5451-4146-917C-079A8D38C62E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfAuth.Microsoft.EntraId", "src\WolfAuth.Microsoft.EntraId\WolfAuth.Microsoft.EntraId.csproj", "{6F6A3E71-5451-4146-917C-079A8D38C62E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{5D20AA90-6969-D8BD-9DCD-8634F4692FDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfAuth.SampleApi", "samples\WolfAuth.SampleApi\WolfAuth.SampleApi.csproj", "{7BF88A79-0926-4A7A-AD73-D3777436BD62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfAuth.EntraIdWebSite", "samples\WolfAuth.EntraIdWebSite\WolfAuth.EntraIdWebSite.csproj", "{4CE10665-736C-40AE-85D4-75C6EEBFF953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +119,18 @@ Global
 		{7BF88A79-0926-4A7A-AD73-D3777436BD62}.Release|x64.Build.0 = Release|Any CPU
 		{7BF88A79-0926-4A7A-AD73-D3777436BD62}.Release|x86.ActiveCfg = Release|Any CPU
 		{7BF88A79-0926-4A7A-AD73-D3777436BD62}.Release|x86.Build.0 = Release|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Debug|x64.Build.0 = Debug|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Debug|x86.Build.0 = Debug|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Release|x64.ActiveCfg = Release|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Release|x64.Build.0 = Release|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Release|x86.ActiveCfg = Release|Any CPU
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,5 +143,6 @@ Global
 		{0911DB8B-296F-4FC6-9C39-C3B54BDF7565} = {E2827727-DE0D-4199-8B20-AC09A55B75F0}
 		{6F6A3E71-5451-4146-917C-079A8D38C62E} = {E2827727-DE0D-4199-8B20-AC09A55B75F0}
 		{7BF88A79-0926-4A7A-AD73-D3777436BD62} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{4CE10665-736C-40AE-85D4-75C6EEBFF953} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 	EndGlobalSection
 EndGlobal
