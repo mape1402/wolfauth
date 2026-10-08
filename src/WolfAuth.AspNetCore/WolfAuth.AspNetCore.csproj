@@ -5,7 +5,7 @@
     <PackageId>WolfAuth.AspNetCore</PackageId>
     <Title>WolfAuth ASP.NET Core Integration</Title>
     <PackageType>Dependency</PackageType>
-    <Description>ASP.NET Core integration package for WolfAuth authentication and authorization.</Description>
+    <Description>ASP.NET Core authentication subject binding, current-subject access, and middleware for WolfAuth.</Description>
   </PropertyGroup>
 
   <ItemGroup>

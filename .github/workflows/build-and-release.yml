@@ -9,7 +9,7 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'samples/**'
-      - 'docs/**'
+      - 'assets/**'
       - '.github/workflows/**'
       - '.release'
       - 'CHANGELOG.md'
@@ -23,7 +23,7 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'samples/**'
-      - 'docs/**'
+      - 'assets/**'
       - '.github/workflows/**'
       - '.release'
       - 'CHANGELOG.md'
@@ -198,13 +198,25 @@ jobs:
 
       - name: Pack NuGet packages
         if: steps.release.outputs.should_release == 'true'
-        run: >
-          dotnet pack "$DOTNET_TARGET"
-          --configuration "$CONFIGURATION"
-          --output "$NUGET_OUTPUT"
-          /p:Version=${{ steps.release.outputs.version }}
-          /p:PackageVersion=${{ steps.release.outputs.version }}
-          /p:MinVerVersionOverride=${{ steps.release.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          projects=(
+            "src/WolfAuth/WolfAuth.csproj"
+            "src/WolfAuth.AspNetCore/WolfAuth.AspNetCore.csproj"
+            "src/WolfAuth.OpenIdConnect/WolfAuth.OpenIdConnect.csproj"
+            "src/WolfAuth.Microsoft.EntraId/WolfAuth.Microsoft.EntraId.csproj"
+          )
+
+          for project in "${projects[@]}"; do
+            dotnet pack "$project" \
+              --configuration "$CONFIGURATION" \
+              --output "$NUGET_OUTPUT" \
+              /p:Version=${{ steps.release.outputs.version }} \
+              /p:PackageVersion=${{ steps.release.outputs.version }} \
+              /p:MinVerVersionOverride=${{ steps.release.outputs.version }}
+          done
 
       - name: Create or update release tag
         if: steps.release.outputs.should_release == 'true'

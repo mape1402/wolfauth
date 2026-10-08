@@ -5,7 +5,7 @@
     <PackageId>WolfAuth</PackageId>
     <Title>WolfAuth</Title>
     <PackageType>Dependency</PackageType>
-    <Description>Centralized authentication, authorization, and access provisioning library for Elysium products.</Description>
+    <Description>Core authentication subject contracts, claims mapping, and in-memory support for WolfAuth.</Description>
   </PropertyGroup>
 
 </Project>

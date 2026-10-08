@@ -93,8 +93,8 @@ internal sealed class Program
         var app = builder.Build();
         app.UseHttpsRedirection();
         app.UseAuthentication();
-        app.UseAuthorization();
         app.UseWolfAuth();
+        app.UseAuthorization();
 
         app.MapGet("/", (HttpContext context, IEntraIdPageRenderer renderer) =>
                 Results.Content(renderer.Home(context.User), "text/html"))
