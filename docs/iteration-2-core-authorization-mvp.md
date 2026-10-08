@@ -297,6 +297,14 @@ Iteration 2 is complete when:
 - All public APIs introduced in Iteration 2 have XML summaries.
 - No ASP.NET Core, EF Core, provider-specific, invitation, or admin UI dependency is introduced.
 
+## Implemented Artifacts
+
+- Authorization store contract under `src/WolfAuth/Stores/IWolfAuthAuthorizationStore.cs`.
+- In-memory authorization store and builder under `src/WolfAuth/Stores`.
+- Effective access resolver contract and implementation under `src/WolfAuth/Authorization`.
+- Core evaluator under `src/WolfAuth/Authorization/WolfAuthEvaluator.cs`.
+- Authorization acceptance tests under `tests/WolfAuth.Tests/Authorization`.
+
 ## Required Test Names
 
 Use these names unless the implementation reveals a clearer local convention:

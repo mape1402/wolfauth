@@ -134,6 +134,15 @@ Authenticating with Entra ID does not automatically mean the product can list te
 
 WolfAuth authorization should be independent from the UI technology. The same model should protect Razor Pages, MVC, APIs, Blazor, Angular, React, Vue, background workers, and internal application commands.
 
+The first authorization core includes:
+
+- `IWolfAuthAuthorizationStore`.
+- `WolfAuthInMemoryAuthorizationStore`.
+- `IWolfAuthEffectiveAccessResolver`.
+- `WolfAuthEffectiveAccessResolver`.
+- `WolfAuthEvaluator`.
+- `IWolfAuthPolicyEvaluator`.
+
 The core model includes:
 
 - Known subjects.
@@ -736,17 +745,19 @@ This repository currently contains the initial WolfAuth contract spike:
 src/
   WolfAuth/
     Authentication/
+    Authorization/
     Contracts/
     Development/
     Evaluation/
     Options/
     Registry/
+    Stores/
     WolfAuth.csproj
 tests/
   WolfAuth.Tests/
 ```
 
-The current code defines provider-agnostic contracts, claims principal subject resolution, development subject factories, registry surfaces, evaluator interfaces, options, and documented acceptance scenarios. The next implementation step should be the Core Authorization MVP.
+The current code defines provider-agnostic contracts, claims principal subject resolution, development subject factories, registry surfaces, in-memory authorization storage, effective access expansion, evaluator interfaces, options, and tests for authentication binding and core authorization. The next implementation step should be ASP.NET Core integration.
 
 ## Build
 
