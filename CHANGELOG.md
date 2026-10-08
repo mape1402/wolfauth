@@ -4,6 +4,10 @@ All notable changes to WolfAuth will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Added the Iteration 0 product and contract spike plan.
+
 ## [v0.1.0] - 2026-10-07
 
 ### Added

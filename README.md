@@ -568,6 +568,8 @@ Build the smallest useful authorization core before adapter or UI work:
 
 This proves the heart of WolfAuth without pulling in EF Core, admin UI, Entra ID, Graph, or invitations too early.
 
+See the detailed [Iteration 0 plan](docs/iteration-0-product-contract-spike.md).
+
 ## Roadmap
 
 ### Iteration 0: Product And Contract Spike
