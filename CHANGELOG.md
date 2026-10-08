@@ -9,6 +9,7 @@ All notable changes to WolfAuth will be documented in this file.
 - Added the Iteration 0 product and contract spike plan.
 - Added compiled Iteration 0 contracts for subjects, permissions, roles, scopes, assignments, policies, effective access, evaluation, options, and permission registry registration.
 - Added Iteration 0 contract notes and acceptance scenario matrix.
+- Added XML documentation generation and summaries for the public contract surface.
 
 ## [v0.1.0] - 2026-10-07
 
