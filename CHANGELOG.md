@@ -1,28 +1,26 @@
 # Changelog
 
-All notable changes to WolfAuth will be documented in this file.
+All notable changes to WolfAuth are documented in this file.
 
 ## [Unreleased]
 
-### Added
+No unreleased changes.
 
-- Added the Iteration 0 product and contract spike plan.
-- Added compiled Iteration 0 contracts for subjects, permissions, roles, scopes, assignments, policies, effective access, evaluation, options, and permission registry registration.
-- Added Iteration 0 contract notes and acceptance scenario matrix.
-- Added XML documentation generation and summaries for the public contract surface.
-- Added complete Iteration 1 Authentication Binding MVP and Iteration 2 Core Authorization MVP implementation plans.
-- Added the Iteration 1 authentication binding implementation with claims principal subject resolution, development subject factory interfaces, and unit tests.
-- Added the Iteration 2 core authorization implementation with in-memory authorization storage, effective access expansion, evaluator logic, policy dispatch, and unit tests.
-- Added ASP.NET Core integration with dependency injection, middleware, authorization attributes, dynamic policies, handlers, and minimal administration endpoints.
-- Added persistence abstractions, mutable in-memory persistence, Entity Framework Core persistence, provisioning services, administration services, audit records, effective access caching, and assignment validation.
-- Added OpenID Connect and Microsoft Entra ID provisioning mappers.
-- Added roadmap implementation notes and security hardening guidance.
+## [v1.0.0] - 2026-10-08
+
+### Stable
+
+- Authentication subject normalization from an authenticated `ClaimsPrincipal`.
+- ASP.NET Core registration, middleware, and current-subject access for authenticated requests.
+- Generic OpenID Connect claims mapping for authentication provisioning scenarios.
+- Microsoft Entra ID claims and group mapping through `WolfAuth.Microsoft.EntraId`.
+- Entra ID web site sample that validates sign-in, callback handling, current-subject resolution, and protected dashboard access.
+- NuGet package metadata, README, package icon, XML documentation, symbols, and source package configuration for the authentication package set.
 
 ## [v0.1.0] - 2026-10-07
 
 ### Added
 
-- Added the initial WolfAuth solution scaffold with one packable library project.
-- Added build and release automation adapted from Axolotl.
-- Added the release marker, changelog, README, shared build properties, and repository hygiene files.
-- Kept the package project intentionally empty so the first implementation can start with a focused authorization contract spike.
+- Initial WolfAuth solution scaffold.
+- Core authentication, authorization, provisioning, persistence, audit, and ASP.NET Core integration experiments.
+- Initial CI build, test, coverage, packaging, and trusted publishing workflow.

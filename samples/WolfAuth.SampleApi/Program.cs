@@ -62,8 +62,8 @@ internal sealed class Program
 
         var app = builder.Build();
         app.UseAuthentication();
-        app.UseAuthorization();
         app.UseWolfAuth();
+        app.UseAuthorization();
 
         app.MapGet("/contracts/{contractId}/events", (string contractId) =>
             Results.Ok(new

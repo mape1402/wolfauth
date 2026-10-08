@@ -5,7 +5,7 @@
     <PackageId>WolfAuth.OpenIdConnect</PackageId>
     <Title>WolfAuth OpenID Connect Adapter</Title>
     <PackageType>Dependency</PackageType>
-    <Description>OpenID Connect subject and provisioning adapter package for WolfAuth.</Description>
+    <Description>OpenID Connect claims-to-subject provisioning mapper for WolfAuth authentication integrations.</Description>
   </PropertyGroup>
 
   <ItemGroup>

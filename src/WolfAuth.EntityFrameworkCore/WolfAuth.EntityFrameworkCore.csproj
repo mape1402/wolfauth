@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <IsPackable>true</IsPackable>
+    <IsPackable>false</IsPackable>
     <PackageId>WolfAuth.EntityFrameworkCore</PackageId>
     <Title>WolfAuth Entity Framework Core Store</Title>
     <PackageType>Dependency</PackageType>
-    <Description>Entity Framework Core persistence package for WolfAuth authorization and provisioning data.</Description>
+    <Description>Work-in-progress Entity Framework Core persistence package for future WolfAuth storage releases.</Description>
   </PropertyGroup>
 
   <ItemGroup>

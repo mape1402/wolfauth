@@ -5,7 +5,7 @@
     <PackageId>WolfAuth.Microsoft.EntraId</PackageId>
     <Title>WolfAuth Microsoft Entra ID Adapter</Title>
     <PackageType>Dependency</PackageType>
-    <Description>Microsoft Entra ID subject and group adapter package for WolfAuth.</Description>
+    <Description>Microsoft Entra ID claims and group mapping adapter for WolfAuth authentication integrations.</Description>
   </PropertyGroup>
 
   <ItemGroup>
