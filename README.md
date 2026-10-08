@@ -568,7 +568,7 @@ WolfAuth
 WolfAuth.AspNetCore
 WolfAuth.EntityFrameworkCore
 WolfAuth.OpenIdConnect
-WolfAuth.MicrosoftEntraId
+WolfAuth.Microsoft.EntraId
 ```
 
 Future packages may still split reusable UI, richer directory adapters, invitations, and email senders:
@@ -712,7 +712,7 @@ src/
   WolfAuth.AspNetCore/
   WolfAuth.EntityFrameworkCore/
   WolfAuth.OpenIdConnect/
-  WolfAuth.MicrosoftEntraId/
+  WolfAuth.Microsoft.EntraId/
 tests/
   WolfAuth.Tests/
 ```

@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using WolfAuth.MicrosoftEntraId;
+using WolfAuth.Microsoft.EntraId;
 using WolfAuth.OpenIdConnect;
 
 namespace WolfAuth.Tests.Providers;

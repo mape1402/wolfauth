@@ -39,7 +39,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\WolfAuth.AspNetCore\WolfAuth.AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\WolfAuth.EntityFrameworkCore\WolfAuth.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\..\src\WolfAuth.MicrosoftEntraId\WolfAuth.MicrosoftEntraId.csproj" />
+    <ProjectReference Include="..\..\src\WolfAuth.Microsoft.EntraId\WolfAuth.Microsoft.EntraId.csproj" />
     <ProjectReference Include="..\..\src\WolfAuth.OpenIdConnect\WolfAuth.OpenIdConnect.csproj" />
     <ProjectReference Include="..\..\src\WolfAuth\WolfAuth.csproj" />
   </ItemGroup>
