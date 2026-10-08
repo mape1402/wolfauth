@@ -570,6 +570,7 @@ This proves the heart of WolfAuth without pulling in EF Core, admin UI, Entra ID
 
 See the detailed [Iteration 0 plan](docs/iteration-0-product-contract-spike.md).
 The compiled contract notes are in [Iteration 0 contracts](docs/iteration-0-contracts.md), and the first evaluator test matrix is in [Iteration 0 acceptance scenarios](docs/iteration-0-acceptance-scenarios.md).
+The next implementation plan is [Iteration 1: Core Authorization MVP](docs/iteration-1-core-authorization-mvp.md).
 
 ## Roadmap
 
@@ -598,6 +599,8 @@ Acceptance criteria:
 ### Iteration 1: Core Authorization MVP
 
 Implement the core in memory with strong unit tests.
+
+See the detailed [Iteration 1 plan](docs/iteration-1-core-authorization-mvp.md).
 
 Focus areas:
 
