@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>WolfAuth.OpenIdConnect</PackageId>
+    <Title>WolfAuth OpenID Connect Adapter</Title>
+    <PackageType>Dependency</PackageType>
+    <Description>OpenID Connect subject and provisioning adapter package for WolfAuth.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WolfAuth\WolfAuth.csproj" />
+  </ItemGroup>
+
+</Project>

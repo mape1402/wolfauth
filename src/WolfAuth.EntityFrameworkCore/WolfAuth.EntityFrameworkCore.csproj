@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>WolfAuth.EntityFrameworkCore</PackageId>
+    <Title>WolfAuth Entity Framework Core Store</Title>
+    <PackageType>Dependency</PackageType>
+    <Description>Entity Framework Core persistence package for WolfAuth authorization and provisioning data.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.22" />
+    <ProjectReference Include="..\WolfAuth\WolfAuth.csproj" />
+  </ItemGroup>
+
+</Project>

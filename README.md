@@ -138,10 +138,15 @@ The first authorization core includes:
 
 - `IWolfAuthAuthorizationStore`.
 - `WolfAuthInMemoryAuthorizationStore`.
+- `WolfAuthInMemoryPersistenceStore`.
 - `IWolfAuthEffectiveAccessResolver`.
 - `WolfAuthEffectiveAccessResolver`.
+- `WolfAuthCachedEffectiveAccessResolver`.
 - `WolfAuthEvaluator`.
+- `WolfAuthAuditingEvaluator`.
 - `IWolfAuthPolicyEvaluator`.
+- `IWolfAuthProvisioningService`.
+- `IWolfAuthAdministrationService`.
 
 The core model includes:
 
@@ -306,32 +311,66 @@ Button: Delete -> contracts.events.delete
 
 ## ASP.NET Core Integration
 
-Razor Pages and APIs should be able to use attributes, filters, middleware, endpoint metadata, and explicit service calls.
+Razor Pages and APIs can use the `WolfAuth.AspNetCore` package for dependency injection, subject resolution middleware, dynamic authorization policies, attributes, handlers, and minimal administration endpoints.
 
-Conceptual Razor Pages usage:
+Service registration:
 
 ```csharp
-[RequirePermission("contracts.events.view")]
+builder.Services.AddWolfAuth(wolf =>
+{
+    wolf.Registry
+        .AddPermission("contracts.events.view")
+        .AddRole("reader", role => role.AddPermission("contracts.events.view"));
+});
+```
+
+Pipeline registration:
+
+```csharp
+app.UseAuthentication();
+app.UseWolfAuth();
+app.UseAuthorization();
+app.MapWolfAuthAdminApi();
+```
+
+Razor Pages or controller usage:
+
+```csharp
+[WolfAuthPermission("contracts.events.view")]
 public class EventsPageModel : PageModel
 {
 }
 ```
 
-Conceptual resource action usage:
+Explicit resource action usage:
 
 ```csharp
-await authorization.RequireAsync(User, "contracts.events.version.create", eventResource);
+await evaluator.CanAsync(WolfAuthEvaluationContext.ForPermission(
+    subject,
+    "contracts.events.version.create",
+    "environment:qa",
+    eventResource));
 ```
 
-Conceptual API usage:
+API usage:
 
 ```csharp
-[RequirePermission("distribution.releases.create")]
+[WolfAuthPermission("distribution.releases.create")]
 [HttpPost("/api/releases")]
 public async Task<IActionResult> CreateRelease(...)
 {
 }
 ```
+
+The ASP.NET Core package includes:
+
+- `AddWolfAuth(...)`.
+- `UseWolfAuth()`.
+- `MapWolfAuthAdminApi(...)`.
+- `IWolfAuthCurrentSubjectAccessor`.
+- `WolfAuthPermissionAttribute`.
+- `WolfAuthPolicyAttribute`.
+- Dynamic policy names backed by `IAuthorizationPolicyProvider`.
 
 ## SPA Contract
 
@@ -522,38 +561,24 @@ app.MapWolfAuthApi();
 
 ## Proposed Package Direction
 
-The first repository scaffold contains one packable package. As the design stabilizes, the library can split into focused packages:
-
-Core:
+The repository now ships focused packages:
 
 ```text
 WolfAuth
-WolfAuth.Abstractions
-WolfAuth.DependencyInjection
-```
-
-ASP.NET Core and storage:
-
-```text
 WolfAuth.AspNetCore
 WolfAuth.EntityFrameworkCore
-WolfAuth.WebUI
-WolfAuth.Api
+WolfAuth.OpenIdConnect
+WolfAuth.MicrosoftEntraId
 ```
 
-Identity and directory adapters:
+Future packages may still split reusable UI, richer directory adapters, invitations, and email senders:
 
 ```text
-WolfAuth.EntraId
+WolfAuth.WebUI
+WolfAuth.Api
 WolfAuth.Auth0
 WolfAuth.Keycloak
 WolfAuth.Okta
-WolfAuth.OpenIdConnect
-```
-
-Email and invitations:
-
-```text
 WolfAuth.Email.Smtp
 WolfAuth.Email.SendGrid
 WolfAuth.Email.Graph
@@ -590,7 +615,7 @@ This proves the heart of WolfAuth without pulling in EF Core, admin UI, Entra ID
 
 See the detailed [Iteration 0 plan](docs/iteration-0-product-contract-spike.md).
 The compiled contract notes are in [Iteration 0 contracts](docs/iteration-0-contracts.md), and the first evaluator test matrix is in [Iteration 0 acceptance scenarios](docs/iteration-0-acceptance-scenarios.md).
-The authentication binding implementation is tracked in [Iteration 1: Authentication Binding MVP](docs/iteration-1-authentication-binding-mvp.md), and the next implementation plan is [Iteration 2: Core Authorization MVP](docs/iteration-2-core-authorization-mvp.md).
+The authentication binding implementation is tracked in [Iteration 1: Authentication Binding MVP](docs/iteration-1-authentication-binding-mvp.md), the evaluator is tracked in [Iteration 2: Core Authorization MVP](docs/iteration-2-core-authorization-mvp.md), and the current roadmap implementation notes are in [Roadmap Implementation Notes](docs/roadmap-implementation-notes.md).
 
 ## Roadmap
 
@@ -647,117 +672,52 @@ Focus areas:
 - Known subject enforcement.
 - Effective permission calculation.
 
-### Iteration 3: ASP.NET Core Integration
+### Iteration 3 And Beyond
 
-Make the core enforceable in web hosts.
+The repository now contains the first implementation pass for the broader roadmap:
 
-Focus areas:
-
-- Dependency injection.
-- Claims principal normalization.
-- Authorization attributes.
-- Endpoint metadata.
-- Razor helpers.
-- Explicit `RequireAsync` service calls.
-- Minimal API integration.
-
-### Iteration 4: Persistence
-
-Add durable storage.
-
-Focus areas:
-
-- EF Core entities.
-- Migrations.
-- User and role persistence.
-- Direct permission assignments.
-- Scoped assignments.
-- External group mappings.
-- Audit log.
-- Bootstrap admin seeding.
-
-### Iteration 5: Admin UI
-
-Provide a reusable management surface.
-
-Focus areas:
-
-- Users.
-- Roles.
-- Assignments.
-- Invitations.
-- Group mappings.
-- Audit log.
-- Host branding and theming hooks.
-
-### Iteration 6: Entra ID Adapter
-
-Add a first provider-specific adapter.
-
-Focus areas:
-
-- OpenID Connect configuration helpers.
-- Microsoft Graph directory adapter.
-- User search.
-- Group search.
-- Group-to-role mapping.
-- Group overage resolution.
-
-### Iteration 7: Invitations
-
-Support provisioning without directory search.
-
-Focus areas:
-
-- Invitation creation.
-- Invitation acceptance.
-- Expiration.
-- One-time use.
-- Email sender abstraction.
-- Copy-link flow.
-
-### Iteration 8: SPA/API Contract
-
-Expose reusable API endpoints for SPAs and external clients.
-
-Focus areas:
-
-- `/api/security/me`.
-- `/api/security/can`.
-- `/api/security/permissions`.
-- Administrative endpoints.
-
-### Iteration 9: Host Integrations
-
-Integrate WolfAuth into Elysium products.
-
-Targets:
-
-- KnOwl.
-- Krackend Orchestrator.
-- Future Elysium hosts.
+- ASP.NET Core integration through `WolfAuth.AspNetCore`.
+- Persistence abstractions in the core package.
+- EF Core persistence through `WolfAuth.EntityFrameworkCore`.
+- Provisioning core with idempotent subject upserts.
+- OpenID Connect and Microsoft Entra ID provisioning mappers.
+- Minimal administration endpoints and administration service.
+- Audit records and auditing evaluator decorator.
+- Effective access cache and cache invalidation hooks.
+- Assignment validation and a security hardening document.
+- CI and NuGet packaging across all packable projects.
 
 ## Current Repository State
 
-This repository currently contains the initial WolfAuth contract spike:
+This repository currently contains the WolfAuth core and first integration packages:
 
 ```text
 src/
   WolfAuth/
+    Administration/
     Authentication/
     Authorization/
+    Audit/
+    Caching/
     Contracts/
     Development/
     Evaluation/
     Options/
+    Persistence/
+    Provisioning/
     Registry/
     Stores/
+    Validation/
     WolfAuth.csproj
+  WolfAuth.AspNetCore/
+  WolfAuth.EntityFrameworkCore/
+  WolfAuth.OpenIdConnect/
+  WolfAuth.MicrosoftEntraId/
 tests/
   WolfAuth.Tests/
 ```
 
-The current code defines provider-agnostic contracts, claims principal subject resolution, development subject factories, registry surfaces, in-memory authorization storage, effective access expansion, evaluator interfaces, options, and tests for authentication binding and core authorization. The next implementation step should be ASP.NET Core integration.
+The current code defines provider-agnostic contracts, claims principal subject resolution, development subject factories, registry surfaces, in-memory and EF-backed authorization storage, effective access expansion, evaluator interfaces, ASP.NET Core enforcement, provisioning, administration services, audit records, caching, provider mappers, and tests for the implemented surfaces.
 
 ## Build
 

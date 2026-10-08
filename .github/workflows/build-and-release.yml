@@ -8,6 +8,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'docs/**'
       - '.github/workflows/**'
       - '.release'
       - 'CHANGELOG.md'
@@ -20,6 +21,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'docs/**'
       - '.github/workflows/**'
       - '.release'
       - 'CHANGELOG.md'
@@ -65,7 +67,7 @@ jobs:
         run: dotnet restore "$DOTNET_TARGET"
 
       - name: Build
-        run: dotnet build "$DOTNET_TARGET" --no-restore --configuration "$CONFIGURATION"
+        run: dotnet build "$DOTNET_TARGET" --no-restore --configuration "$CONFIGURATION" /warnaserror:CS1591
 
       - name: Test
         shell: bash
