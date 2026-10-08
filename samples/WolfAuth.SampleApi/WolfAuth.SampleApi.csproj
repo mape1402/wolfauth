@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WolfAuth.AspNetCore\WolfAuth.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\WolfAuth\WolfAuth.csproj" />
+  </ItemGroup>
+
+</Project>

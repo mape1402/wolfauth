@@ -39,4 +39,37 @@ public sealed class WolfAuthDevelopmentSubjectFactoryTests
         Assert.Contains(subject.Groups, group => group.ExternalGroupId.ToString() == "Developers");
         Assert.Contains(subject.Claims, claim => claim.Type == "mode" && claim.Value == "development");
     }
+
+    /// <summary>
+    /// Verifies that the factory falls back to external user id and removes duplicate or blank groups.
+    /// </summary>
+    [Fact]
+    public void Create_UsesFallbackSubjectIdAndNormalizesGroups()
+    {
+        IWolfAuthDevelopmentSubjectFactory factory = new WolfAuthDevelopmentSubjectFactory();
+        var request = new WolfAuthDevelopmentSubjectRequest
+        {
+            SubjectId = " ",
+            ExternalUserId = "external-user",
+            Provider = "local",
+            GroupIds = ["Developers", "Developers", " "]
+        };
+
+        var subject = factory.Create(request);
+
+        Assert.Equal("external-user", subject.SubjectId.ToString());
+        Assert.Single(subject.Groups);
+        Assert.Equal("Developers", subject.Groups[0].ExternalGroupId.ToString());
+    }
+
+    /// <summary>
+    /// Verifies that null requests are rejected.
+    /// </summary>
+    [Fact]
+    public void Create_ThrowsForNullRequest()
+    {
+        IWolfAuthDevelopmentSubjectFactory factory = new WolfAuthDevelopmentSubjectFactory();
+
+        Assert.Throws<ArgumentNullException>(() => factory.Create(null!));
+    }
 }
