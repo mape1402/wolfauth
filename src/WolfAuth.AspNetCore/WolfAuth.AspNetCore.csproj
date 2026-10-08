@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>WolfAuth.AspNetCore</PackageId>
+    <Title>WolfAuth ASP.NET Core Integration</Title>
+    <PackageType>Dependency</PackageType>
+    <Description>ASP.NET Core integration package for WolfAuth authentication and authorization.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\WolfAuth\WolfAuth.csproj" />
+  </ItemGroup>
+
+</Project>

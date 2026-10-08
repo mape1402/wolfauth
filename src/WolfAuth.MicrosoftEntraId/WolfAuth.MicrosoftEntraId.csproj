@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>WolfAuth.MicrosoftEntraId</PackageId>
+    <Title>WolfAuth Microsoft Entra ID Adapter</Title>
+    <PackageType>Dependency</PackageType>
+    <Description>Microsoft Entra ID subject and group adapter package for WolfAuth.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WolfAuth.OpenIdConnect\WolfAuth.OpenIdConnect.csproj" />
+    <ProjectReference Include="..\WolfAuth\WolfAuth.csproj" />
+  </ItemGroup>
+
+</Project>
