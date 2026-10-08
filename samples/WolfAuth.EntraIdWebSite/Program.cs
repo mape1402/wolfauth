@@ -21,6 +21,8 @@ internal sealed class Program
     private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Configuration.AddUserSecrets<Program>(optional: true);
+
         var sitePermission = new WolfAuthPermissionKey("site.dashboard.view");
         var siteRole = new WolfAuthRoleKey("entra-web-user");
         var dashboardPolicyName = new WolfAuthPolicyNameCodec().CreatePermissionPolicyName(sitePermission);
