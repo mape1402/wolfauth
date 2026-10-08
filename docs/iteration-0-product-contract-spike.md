@@ -225,7 +225,7 @@ Iteration 0 is complete when:
 - The evaluator surface is clear enough to implement.
 - Scope and assignment semantics are unambiguous for MVP scenarios.
 - Host registration has a target developer experience.
-- Acceptance test scenarios are ready for Iteration 1.
+- Acceptance test scenarios are ready for the Core Authorization MVP.
 - Open decisions are captured with recommended defaults.
 
 ## Implemented Artifacts
