@@ -47,14 +47,17 @@ internal sealed class Program
                 var entraId = builder.Configuration
                     .GetSection(EntraIdSampleOptions.SectionName)
                     .Get<EntraIdSampleOptions>() ?? new EntraIdSampleOptions();
+                if (string.IsNullOrWhiteSpace(entraId.ClientSecret))
+                {
+                    throw new InvalidOperationException(
+                        "EntraId:ClientSecret is required for this server-side Web sample. " +
+                        "PKCE is enabled, but Microsoft Entra ID still requires a client secret or client assertion " +
+                        "when the app registration is configured as a Web/confidential client.");
+                }
 
                 options.Authority = $"https://login.microsoftonline.com/{entraId.TenantId}/v2.0";
                 options.ClientId = entraId.ClientId;
-                if (!string.IsNullOrWhiteSpace(entraId.ClientSecret))
-                {
-                    options.ClientSecret = entraId.ClientSecret;
-                }
-
+                options.ClientSecret = entraId.ClientSecret;
                 options.CallbackPath = entraId.CallbackPath;
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 options.UsePkce = true;
