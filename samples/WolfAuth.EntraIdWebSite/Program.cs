@@ -22,6 +22,8 @@ internal sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Configuration.AddUserSecrets<Program>(optional: true);
+        builder.Configuration.AddEnvironmentVariables();
+        builder.Configuration.AddCommandLine(args);
 
         var sitePermission = new WolfAuthPermissionKey("site.dashboard.view");
         var siteRole = new WolfAuthRoleKey("entra-web-user");
@@ -48,9 +50,14 @@ internal sealed class Program
 
                 options.Authority = $"https://login.microsoftonline.com/{entraId.TenantId}/v2.0";
                 options.ClientId = entraId.ClientId;
-                options.ClientSecret = entraId.ClientSecret;
+                if (!string.IsNullOrWhiteSpace(entraId.ClientSecret))
+                {
+                    options.ClientSecret = entraId.ClientSecret;
+                }
+
                 options.CallbackPath = entraId.CallbackPath;
                 options.ResponseType = OpenIdConnectResponseType.Code;
+                options.UsePkce = true;
                 options.SaveTokens = true;
                 options.Scope.Clear();
                 options.Scope.Add("openid");

@@ -149,14 +149,13 @@ Create an app registration in Microsoft Entra ID:
 - Platform: Web.
 - Redirect URI: `https://localhost:7219/signin-oidc`.
 - Front-channel logout URL: `https://localhost:7219/signout-callback-oidc`.
-- Authorization code flow with a client secret for local testing.
+- Authorization code flow with PKCE. A client secret is optional and only needed when you want the host to run as a confidential client.
 
 Store local secrets:
 
 ```bash
 dotnet user-secrets set "EntraId:TenantId" "<tenant-id>" --project samples/WolfAuth.EntraIdWebSite/WolfAuth.EntraIdWebSite.csproj
 dotnet user-secrets set "EntraId:ClientId" "<client-id>" --project samples/WolfAuth.EntraIdWebSite/WolfAuth.EntraIdWebSite.csproj
-dotnet user-secrets set "EntraId:ClientSecret" "<client-secret>" --project samples/WolfAuth.EntraIdWebSite/WolfAuth.EntraIdWebSite.csproj
 ```
 
 Run the sample:

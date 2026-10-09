@@ -21,7 +21,7 @@ internal sealed class EntraIdSampleOptions
     public string ClientId { get; set; } = "00000000-0000-0000-0000-000000000000";
 
     /// <summary>
-    /// Gets or sets the application client secret for the authorization code flow.
+    /// Gets or sets the optional application client secret for confidential-client sign-in.
     /// </summary>
     public string? ClientSecret { get; set; }
 
