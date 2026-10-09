@@ -2,6 +2,24 @@
   <img src="assets/wolfauth-logo.png" alt="WolfAuth" width="360" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/mape1402/wolfauth/actions/workflows/build-and-release.yml">
+    <img src="https://github.com/mape1402/wolfauth/actions/workflows/build-and-release.yml/badge.svg?branch=main" alt="Build" />
+  </a>
+  <a href="https://www.nuget.org/packages/WolfAuth">
+    <img src="https://img.shields.io/nuget/v/WolfAuth.svg?label=package" alt="Package" />
+  </a>
+  <a href="https://www.nuget.org/packages/WolfAuth">
+    <img src="https://img.shields.io/nuget/dt/WolfAuth.svg?label=downloads" alt="Downloads" />
+  </a>
+  <a href="https://github.com/mape1402/wolfauth/actions/workflows/build-and-release.yml">
+    <img src="https://img.shields.io/badge/coverage-100%25-brightgreen.svg" alt="Coverage" />
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/mape1402/wolfauth.svg" alt="License" />
+  </a>
+</p>
+
 # WolfAuth
 
 WolfAuth is a .NET authentication foundation for products that need a consistent way to normalize signed-in users across identity providers.
